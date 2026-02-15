@@ -5,8 +5,10 @@ window.onload = (event) => {
   fetch(`https://${GetParentResourceName()}/nuiReady`);
 
   const Container = document.getElementById("Container");
+  const TopRight = document.getElementById("TopRight");
   const Logo = document.getElementById("Logo");
   const ID = document.getElementById("ID");
+  const PlayerCount = document.getElementById("PlayerCount");
 
   const Speed = document.getElementById("SpeedIndicator");
   const Fuel = document.getElementById("FuelIndicator");
@@ -73,13 +75,13 @@ window.onload = (event) => {
         case "bottom":
         default:
           IconsContainer.style.top = "auto";
-          IconsContainer.style.bottom = "20px";
+          IconsContainer.style.bottom = "10px";
           break;
       }
       
       switch (hPosition) {
         case "left":
-          IconsContainer.style.left = "220px";
+          IconsContainer.style.left = "300px";
           IconsContainer.style.right = "auto";
           IconsContainer.style.transform = vPosition === "middle" ? "translate(0, -50%)" : "";
           break;
@@ -102,11 +104,22 @@ window.onload = (event) => {
     }
 
     if (action == "setPlayerId") {
+      TopRight.style.display = "flex";
       if (data) {
         ID.style.display = "block";
         ID.textContent = "#" + data;
       } else {
         ID.style.display = "none";
+      }
+    }
+
+    if (action == "setPlayerCount") {
+      TopRight.style.display = "flex";
+      if (data != null && data >= 1) {
+        PlayerCount.style.display = "block";
+        PlayerCount.textContent = data + " Players";
+      } else {
+        PlayerCount.style.display = "none";
       }
     }
 
@@ -227,6 +240,8 @@ window.onload = (event) => {
 
     if (action == "setVoice") {
       Voice.style.display = "block";
+      TopRight.style.display = "flex";
+      
       if (data == "disconnected") {
         VoiceIcon.classList.remove("fa-microphone");
         VoiceIcon.classList.add("fa-times");

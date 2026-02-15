@@ -42,7 +42,7 @@ CreateThread(function()
 			end
 
 			local curUnderwaterTime = GetPlayerUnderwaterTimeRemaining(cache.playerId)
-			if curUnderwaterTime < maxUnderwaterTime then
+			if maxUnderwaterTime and curUnderwaterTime < maxUnderwaterTime then
 				SendMessage('setOxygen', {
 					current = curUnderwaterTime,
 					max = maxUnderwaterTime

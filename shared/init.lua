@@ -72,7 +72,7 @@ if not IsDuplicityVersion() then
         end
 
         SendMessage('setPlayerId', cache.serverId)
-
+        
         if GetConvar('hud:logo', 'true') == 'true' then
             SendMessage('setLogo')
         end
@@ -80,6 +80,15 @@ if not IsDuplicityVersion() then
         local position = GetConvar('hud:position', 'bottom')
         local hPosition = GetConvar('hud:hposition', 'center')
         SendMessage('setPosition', { v = position, h = hPosition })
+
+        local players = #GetActivePlayers()
+        SendMessage('setPlayerCount', players)
+        CreateThread(function()
+            while HUD do
+                Wait(30000)
+                SendMessage('setPlayerCount', #GetActivePlayers())
+            end
+        end)
 
         HUD = true
         SendMessage('toggleHud', HUD)
@@ -90,7 +99,6 @@ if not IsDuplicityVersion() then
         InitializeHUD()
     end)
 
-    -- Commands
     RegisterCommand('togglehud', function()
         HUD = not HUD
         SendMessage('toggleHud', HUD)
