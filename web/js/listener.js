@@ -42,6 +42,61 @@ window.onload = (event) => {
       Container.style.display = data ? "flex" : "none";
     }
 
+    if (action == "setPosition") {
+      console.log("setPosition received:", data);
+      const IconsContainer = document.getElementById("IconsContainer");
+      
+      let vPosition = data;
+      let hPosition = "center";
+      
+      if (typeof data === "object" && data !== null) {
+        vPosition = data.v || "bottom";
+        hPosition = data.h || "center";
+      }
+      
+      IconsContainer.style.marginTop = "";
+      IconsContainer.style.marginBottom = "";
+      IconsContainer.style.top = "";
+      IconsContainer.style.bottom = "";
+      IconsContainer.style.left = "";
+      IconsContainer.style.right = "";
+      IconsContainer.style.transform = "";
+      
+      switch (vPosition) {
+        case "top":
+          IconsContainer.style.top = "20px";
+          IconsContainer.style.bottom = "auto";
+          break;
+        case "middle":
+          IconsContainer.style.top = "50%";
+          break;
+        case "bottom":
+        default:
+          IconsContainer.style.top = "auto";
+          IconsContainer.style.bottom = "20px";
+          break;
+      }
+      
+      switch (hPosition) {
+        case "left":
+          IconsContainer.style.left = "220px";
+          IconsContainer.style.right = "auto";
+          IconsContainer.style.transform = vPosition === "middle" ? "translate(0, -50%)" : "";
+          break;
+        case "right":
+          IconsContainer.style.left = "auto";
+          IconsContainer.style.right = "60px";
+          IconsContainer.style.transform = vPosition === "middle" ? "translate(0, -50%)" : "";
+          break;
+        case "center":
+        default:
+          IconsContainer.style.left = "50%";
+          IconsContainer.style.right = "auto";
+          IconsContainer.style.transform = vPosition === "middle" ? "translate(-50%, -50%)" : "translateX(-50%)";
+          break;
+      }
+    }
+
     if (action == "setLogo") {
       Logo.style.display = "block";
     }

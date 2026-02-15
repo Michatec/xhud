@@ -12,6 +12,56 @@ license 'MIT License'
 author 'Michatec'
 repository 'https://github.com/Michatec/xhud'
 
+--[[ Convars ]]--
+convar {
+    name = 'hud:circleMap',
+    default = 'true',
+    description = 'Enable circle map',
+    save = true
+}
+convar {
+    name = 'hud:logo',
+    default = 'true',
+    description = 'Show logo',
+    save = true
+}
+convar {
+    name = 'hud:position',
+    default = 'bottom',
+    description = 'HUD position: top, middle, bottom',
+    save = true
+}
+convar {
+    name = 'hud:stress',
+    default = 'false',
+    description = 'Enable stress status',
+    save = true
+}
+convar {
+    name = 'hud:versioncheck',
+    default = 'true',
+    description = 'Enable version check',
+    save = true
+}
+convar {
+    name = 'hud:persistentRadar',
+    default = 'false',
+    description = 'Keep radar always visible',
+    save = true
+}
+convar {
+    name = 'hud:stamina',
+    default = 'false',
+    description = 'Show stamina indicator',
+    save = true
+}
+convar {
+    name = 'hud:hposition',
+    default = 'left',
+    description = 'HUD horizontal position: left, center, right',
+    save = true
+}
+
 --[[ Manifest ]]--
 dependencies {
 	'ox_lib'
@@ -32,7 +82,8 @@ client_scripts {
 }
 
 server_scripts {
-	'server/seatbelt.lua'
+	'server/seatbelt.lua',
+	'server/vcheck.lua'
 }
 
 ui_page 'web/index.html'

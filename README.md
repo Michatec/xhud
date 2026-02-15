@@ -45,6 +45,12 @@ setr hud:fuel false
 # Vehicles speed: "imperial" or "metric"
 setr hud:unitsystem "imperial"
 
+# HUD position: top, middle, bottom (default: bottom)
+setr hud:position "bottom"
+
+# HUD horizontal position: left, center, right
+setr hud:hposition "left"
+
 # Radar mode: by default, the radar is only enabled while sitting on a vehicle.
 # Set this to true to have it always enabled. This will also enable the map cycler.
 setr hud:persistentRadar false

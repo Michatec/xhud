@@ -77,6 +77,10 @@ if not IsDuplicityVersion() then
             SendMessage('setLogo')
         end
 
+        local position = GetConvar('hud:position', 'bottom')
+        local hPosition = GetConvar('hud:hposition', 'center')
+        SendMessage('setPosition', { v = position, h = hPosition })
+
         HUD = true
         SendMessage('toggleHud', HUD)
     end
@@ -87,9 +91,7 @@ if not IsDuplicityVersion() then
     end)
 
     -- Commands
-    lib.addCommand('togglehud', {
-        help = 'Toggle the HUD visibility',
-    }, function()
+    RegisterCommand('togglehud', function()
         HUD = not HUD
         SendMessage('toggleHud', HUD)
         lib.notify({
@@ -99,12 +101,11 @@ if not IsDuplicityVersion() then
             type = 'inform',
             duration = 2000
         })
-    end)
+    end, false)
 
-    lib.addCommand('reloadhud', {
-        help = 'Reload the HUD',
-    }, function()
+    RegisterCommand('reloadhud', function()
         InitializeHUD()
+        DisplayRadar(true)
         lib.notify({
             id = 'xhud:reload',
             title = 'HUD',
@@ -112,7 +113,52 @@ if not IsDuplicityVersion() then
             type = 'inform',
             duration = 2000
         })
-    end)
+    end, false)
+
+    RegisterCommand('sethudposition', function(_, args)
+        if not args[1] then
+            lib.notify({
+                id = 'xhud:position:error',
+                title = 'HUD',
+                description = 'Usage: /sethudposition [top|middle|bottom] [left|center|right]',
+                type = 'error',
+                duration = 3000
+            })
+            return
+        end
+        local position = args[1]:lower()
+        local hPosition = args[2] and args[2]:lower() or 'center'
+        if position ~= 'top' and position ~= 'middle' and position ~= 'bottom' then
+            lib.notify({
+                id = 'xhud:position:error',
+                title = 'HUD',
+                description = 'Invalid position. Use: top, middle, or bottom',
+                type = 'error',
+                duration = 3000
+            })
+            return
+        end
+        if hPosition ~= 'left' and hPosition ~= 'center' and hPosition ~= 'right' then
+            lib.notify({
+                id = 'xhud:position:error',
+                title = 'HUD',
+                description = 'Invalid horizontal position. Use: left, center, or right',
+                type = 'error',
+                duration = 3000
+            })
+            return
+        end
+        ExecuteCommand('set hud:position ' .. position)
+        ExecuteCommand('set hud:hposition ' .. hPosition)
+        SendMessage('setPosition', { v = position, h = hPosition })
+        lib.notify({
+            id = 'xhud:position',
+            title = 'HUD',
+            description = 'HUD position set to: ' .. position .. ' ' .. hPosition,
+            type = 'success',
+            duration = 2000
+        })
+    end, false)
 else
     if GetConvar('hud:versioncheck', 'true') == 'true' then
         lib.versionCheck('michatec/xhud')

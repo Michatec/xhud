@@ -13,10 +13,17 @@ img {
   margin: 0;
   display: none;
   flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 #IconsContainer {
-  margin-top: auto;
+  margin-bottom: 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #Icons {
